@@ -1,0 +1,18 @@
+
+<button 
+hx-get='{%url 'lyk' answer.id%}'
+hx-include="input[name='sender'], input[name='lieb']"
+hx-swap='outerHTML'
+name='likeb' 
+id='lik' 
+class='sticker'
+>
+{% if currentUser in answer.like.all %}
+<i class='fas fa-heart' style='color:41A317'></i>
+{%else%}
+<i class='fas fa-heart' style='color:757575'></i> 
+{%endif%}
+<span id='count'>{{answer.like.count}}</span>
+
+<span class='htmx-indicator' style='font-size:40px'><i class='fas fa-heart'></i></span>
+</button>

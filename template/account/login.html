@@ -1,0 +1,72 @@
+{% load crispy_forms_tags %}
+{%load static%}
+{% load fontawesome_5 %}
+{% load hitcount_tags %}
+{% load notifications_tags %}
+<html>
+    <head>
+        <title>
+            Fatwa
+        </title>
+    
+        <link rel='stylesheet' href='{%static 'css/awwal.css'%}' >
+        <meta name='viewport' content='width=device-width initial-scale=1'>
+        <script src='{%static 'js/file.js'%}'> 
+        </script>
+        <script src="{% static 'fontawesome_5/js/all.min.js' %}">
+        </script>
+    </head>
+    
+    <div class='box' style='text-align:center'>
+        <h1>
+            Welcome Back
+            <i class='fas fa-grin'></i>
+         </h1>
+         
+        <div class='box'>
+            <h2 style='color:347C17'>
+              
+                Login
+                
+             </h2>
+            <p>
+             
+                
+                
+                
+                <form method='post'>
+                {%csrf_token%}
+                        
+                            {{ form.errors}}
+                        
+    
+                    {% for field in form %}
+                         <p>
+    
+                             {{field.errors}}
+                             {{ field }}
+                    {% endfor %}
+                    
+                             Remember Me
+                         <p>
+                         
+                    <p>
+                        <button class='input' style='width:100%'>
+                            Login
+                        </button>
+                    </p>
+                    
+                    <p>
+                        If You Don't have an account 
+                        <p>
+                            <a href='{% url 'account_signup'%}' style='font:24px;background-color:357417'>
+                                Signup
+                            </a>
+                        </p>
+                    </p>
+                </form>
+            </p>    
+    
+        </div>
+    </div>
+</html>

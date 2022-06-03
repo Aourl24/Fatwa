@@ -1,0 +1,41 @@
+{%extends 'base.html'%}
+{%block content%}
+<p>
+<div class='box' style='background-color:#F0FF0; height:100%'>
+<div>
+<div class='insize'>
+{{activity.body}}
+</div>
+<spann class='desize'>Created by <b>{{activity.name}}</b></span>
+<div class='desize'>Started on<b>{{activity.Date}}</b></div>
+</div>
+<hr>
+{%for comment in comments%}
+
+
+{% if comment.name == Curruser %}
+<div class='box-border'style='max-width:7cm;height:auto;background-color:347C17;color:white;clear:both;position:relative;border:None;float:right;border-radius:5px;font-size:14px;overfow:scroll;word-wrap:break-word;box-shadow:None'>
+{{comment.body}}
+<span class='desize' style='fot-size:9px;color:347C17'>~{{comment.name|title}}</span>
+</div>
+
+<br>
+{%else%}
+
+<div class='box-border'style='max-width:7cm;background-color:254117;color:white; clear:both;position:relative;float:left;border-radius:5px;font-size:14px;word-wrap:break-word;box-shadow:None'>
+{{comment.body}}
+<span class='desize' style='fot-size:9px;color:347C17'>-{{comment.name|title}}</span>
+</div>
+<br>
+{%endif%}
+
+{%endfor%}
+<form class='hideform' method='POST' style='display:block;width:95%'>
+{%csrf_token%}
+{{form}}
+</form>
+
+</div>
+</p>
+{%endblock%}
+<button type='submit'></button>

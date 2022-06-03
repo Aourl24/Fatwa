@@ -1,0 +1,38 @@
+{%extends 'base.html'%}
+{%load static%}
+
+{%block header%}
+Pending Questions
+{%endblock%}
+
+{%block content%}
+<div class='box'>
+
+{%for question in uquestions%}
+
+{%if question.title != None %}
+<p class='insize'>{{question.title}}</span></p>
+
+<p class='desize'>{{question.body}}</p>
+
+{%else%}
+<p class='insize'>{{question.body}}</p>
+{%endif%}
+
+
+<div class='desize'>
+<p style='backgrund-color:F6bE00'>
+--<i style='color:cbb3c'>{{question.date|date:'D M y'}}</i></p>
+</div>
+<form method='post'>
+{%csrf_token%}
+<button name='pend' value={{question.id}} class='input'>Delete
+</button>
+</form>
+</p>
+<hr>
+<div class='cag'></div>
+{%endfor%}
+</div>
+</div>
+{%endblock%}

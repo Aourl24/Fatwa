@@ -1,0 +1,34 @@
+{%extends 'base.html'%}
+{% load notifications_tags %}
+{%block content%}
+<div class='box'>
+<br>
+<div class='subject'>
+Your Notifications
+</div>
+<hr>
+{% if user.notifications.unread %}
+<p class='subject'>Unread</p>
+{%for notification in user.notifications.unread%}
+
+<p><div class='desize'>{{notification.actor}}</duv></p>
+
+<p><div class='insize'>{{notification.verb}}</div>
+<p><div class='passive'> on {{notification.timestamp}}</p>
+</hr></p>
+
+{%endfor%}
+{%endif%}
+<hr>
+{%for notification in user.notifications.read%}
+{% if notification.actor != request.user %}
+
+<p><div class='desize'>{{notification.actor}}</duv></p>
+{%endif%}
+<p><div class='insize'>{{notification.verb}}</div>
+<p><div class='passive'> on {{notification.timestamp}}</p>
+</hr></p>
+<hr>
+{%endfor%}
+</div>
+{%endblock%}

@@ -1,0 +1,62 @@
+{% load crispy_forms_tags %}
+{%load static%}
+{% load fontawesome_5 %}
+{% load hitcount_tags %}
+{% load notifications_tags %}
+
+<head>
+    <title>
+        Fatwa
+    </title>
+
+    <link rel='stylesheet' href='{%static 'css/awwal.css'%}' >
+    <meta name='viewport' content='width=device-width initial-scale=1'>
+    <script src='{%static 'js/file.js'%}'> 
+    </script>
+    <script src="{% static 'fontawesome_5/js/all.min.js' %}">
+    </script>
+</head>
+
+<div class='box' style='text-align:center'>
+    <h1>
+        Are you Curious, Join Today
+        <i class='fas fa-grin'></i>
+     </h2>
+     
+    <div class='box'>
+        <h2 style='color:347C17'>
+          
+            Sign-Up Form
+            
+         </h2>
+        <p>
+            
+            <form method='post'>
+            {%csrf_token%}
+                {{form.errors}}
+                {% for field in form %}
+                     <p>
+                         {{ field }}
+                      </p>
+                {% endfor %}
+              
+                     
+                <p>
+                    <button class='input' style='width:100%'>
+                        SignUp
+                    </button>
+                </p>
+                
+                <p>
+                    If You are already a Member
+                    <p>
+                        <a href='{% url 'account_login'%}' style='font:24px;background-color:357417'>
+                        Login
+                        </a>
+                    </p>
+                </p>
+            </form>
+        </p>    
+
+    </div>
+</div>

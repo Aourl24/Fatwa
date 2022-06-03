@@ -1,0 +1,29 @@
+
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+<div class='bx'>
+{%for post in posts%}
+
+<div class='box' style='border-radius:5px;border:1px solid #f6be00'>
+
+<p><b style='color:f6be00'>{{post.name|title}}</b></p></p>
+<div class='header' style='background:254117'>
+{{post.head}}
+</div>
+
+{% if post.Image%}
+<p><im src='{{post.Image.url}}' width='320mm'></p>
+{%endif%}
+<p>{{post.body|truncatewords:50 }}
+<a href='{%url 'detailv' post.id%}'>more</a></p>
+<span class='desize'>•{{post.category}}•</span>
+<p><i class='desize'>Post on:{{post.Date}}</i>
+</p>
+</div>
+
+{%endfor%}
+</div>
+{%endblock content%}
+<body>
+

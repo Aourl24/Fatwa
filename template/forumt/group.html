@@ -1,0 +1,50 @@
+{%extends 'base.html'%}
+{%block header%}
+Communities
+{%endblock%}
+{%block content%}
+<div class='box' style='text-align:center'>
+<p class='subject'></p>
+
+<div class='d-flx' style='text-align:center'>
+{%for group in mygroups%}
+
+<p class='box-border'>
+<a class='menu' href='{%url 'groupdetail' group.id%}'>
+{{group.name}}</a></li>
+</p>
+{%endfor%}
+</div>
+
+<br>
+<div class='box-brder'style='text-align:center;'>
+
+<a href='{%url 'groupform' %}' class='menu' style='font-size:18px;color:347C17;'>
+<span class='subject' >Create a Community <i class='fas fa-plus'></i></span> </a>
+</div>
+<br>
+
+<hr>
+<div class='subject' style='text-align:center'><p>Explore Community</p></div>
+{%for group in groups%}
+<div class='border p-2' style='text-align:center'>
+
+<a class='normal' href='{%url 'groupdetail' group.id %}'>
+<div class='insize' style='font-size:20px'>
+{{group.name}}
+</div>
+</a>
+
+<div class='desize'>
+Members {{group.member.count}}
+</div>
+<form method='GET' action='{%url 'join'%}' >
+<input type='hidden' name='admin' value='{{group.admin}}'>
+<p><button name='join' value='{{group.name}}' class='btn-success'>Click to Join</a></button></p>
+</form>
+</div>
+
+{%endfor%}
+</div>
+</div>
+{%endblock%}

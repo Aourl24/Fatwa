@@ -1,0 +1,59 @@
+{%for question in questions%}
+            <a class='normal' href='{%url 'detail' question.id%}'>
+
+                {%if question.title != None %}
+                    <p class='insize'>
+                        {{question.title}}
+                    </p>
+
+                    <p class='mesize' style='font-size:15px'>
+                        {{question.body}}
+                    </p>
+
+                {%else%}
+                    <p class='insize'>
+                        {{question.body}}
+                    </p>
+                    
+                {%endif%}
+
+            </a>
+            
+            <p>
+                <div class='desize' style='font-size:12px'>
+                    <b class='passive'>
+                        {{question.name|title}}
+                    </b>
+                    <span class='passive'>
+                        Asked on {{question.date|date:'D j/m/y'}} {{question.date|time}}
+                    </span>
+                </div>
+            </p>
+            
+            
+            <p>
+                <span class='cag' style='font-size:14px;'>
+                    
+                    <button type='button' class='button' stye='color:254117'>
+                         <i class='fas fa-comment'></i>
+                         Answer {{question.question.count}}
+                     </button>
+
+                                      
+                        {% include 'like2.html' %}
+                         
+                    
+
+                     <button type='button' class='button' stye='color:254117;'> 
+                         <i class='fas fa-eye'></i>
+                         Views {{question.Views}}
+                     </button>
+                     
+                </span>
+              </p>  
+            
+
+            
+            <br>
+            
+        {%endfor%}

@@ -1,0 +1,129 @@
+{%extends 'base.html'%}
+{%block header%}
+{%if user.is_authenticated%}
+{{user.username}}
+{%else%}
+Profile
+{%endif%}
+{%endblock%}
+
+{%block content%}
+{%if user.is_authenticated%}
+<br>
+<div class='form2' id='form2'>
+<p class='header'>Edit Profile</p>
+<form method='post'>
+{%csrf_token%}
+{{form.as_p}}
+<button class='curvebox' type='submit'>Save</button>
+</form>
+</div>
+
+<div class='bodyprofile'>
+<p class='header'>Account Information</p>
+<div class='box-border'>
+<p><b>First Name</b>: {{user.first_name}}</p>
+<p><b>Last Name</b>: {{user.last_name}}</p>
+<p><b>Email</b>: {{user.email}}</p>
+<p><b>Last Login</b>: {{user.last_login}}</p>
+<p><b>Date Joined</b>: {{user.date_joined}}</p>
+
+<button class='input' onClick='edit()'>Edit Profile</button>
+
+
+</div>
+
+
+<p class='header'>Question Asked</p>
+
+<div class='box-border'>
+{%if pquestion%}
+
+{%include 'recent.html' with questions=pquestion%} 
+{%else%}
+<p class='subject'>You Have not Asked Any Questions</p>
+{%endif%}
+
+</div>
+
+<p class='header'>Your Answers to Questions</p>
+<div class='box-border'>
+{%if panswer%}
+{%for answer in panswer%}
+
+<p><span class='cage' style='border-radius:3px;color:254117'>
+<span class='desize'>Answer from</span> <b class='desize'>{{answer.user|title}}</b>-
+<span class='desize'>{{answer.date}}</span></span></p>
+<p> </p>
+<p class='' style='font-size:15px'>{{answer.body}}</p>
+
+
+<div class='box'style='border:1px solid black;border-radius:5px;'>
+
+<p><span class='insize'style='font-size:12px'>Q-{{answer.question.body}}</span></p>
+<p class='desize'style='font-size:11px'>•{{answer.question.name|title}}--
+<i class='desize'>{{answer.question.date|date:'D M y'}}</i></p>
+</div>
+<div class='rating' id='rate'>
+
+
+</div>
+
+<input type='hidden' id='cal' value={{answer.like.count}}>
+<input type='hidden' id='cal2' value={{answer.dislike.count}}>
+
+{%csrf_token%}
+{%include 'like.html'%}
+
+<button onClick='showreplyform({{answer.id}})' style='background:none;border:none;' type='button'>
+ <i class='fas fa-reply'></i> {{answer.replys.count}}</p></button>
+
+{%comment%}
+{%if answer.replys.all%}
+<div class='box'>
+Replies:
+<div class='box'>
+<div class='cage' style='border:none;background-color:white;color:black;text-align:right'>
+{%for reply in answer.replys.all%}
+
+
+<p><span style='border-radius:3px, '><b class='desize' style='font-style:10px'>{{reply.user|title}}</b>-
+<span class='desize'style='font-style:10px'>{{reply.date}}</span></span></p>
+<p> </p>
+<p class='desize' style='font-size:12px'>{{reply.body}}</p>
+
+<hr>
+
+{%endfor%}
+</div>
+</div>
+</div>
+{%endif%}
+{%endcomment%}
+{%endfor%}
+{%else%}
+<p  class='subject'>You have not Answer any Question Yet</p>
+{%endif%}
+
+</div>
+
+
+
+
+</div>
+
+
+<p class='header'>Forums</p>
+
+<div class='box'>
+{%for group in user.ProfUser.group.all%}
+<p>{{group.name}}</p>
+{%endfor%}
+</div>
+{%else%}
+<div class='warning'>
+You have No profile, Kindly Login to Have a Profile</div>
+{%endif%}
+</div>
+</div>
+{%endblock%}

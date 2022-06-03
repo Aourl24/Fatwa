@@ -1,0 +1,36 @@
+{%extends 'base.html'%}
+
+{%block content%}
+<div class='box'>
+    <br>
+    <div class='header'>
+        Admin Page
+    </div>
+    <hr>
+    {%for act in acts%}
+        <div class='insize'>
+            {{act.name}}
+        </div>
+        <p>
+            <div class='desize'>
+                You have {{act.member.count}} Members
+            </div>
+        </p>
+        
+        <div class='insize'>
+            Members
+        </div>
+        
+        {% for member in act.member.all %}
+             <p>     
+                 <div class='subject'>
+                     {{member.user|title}}
+                 </div>
+             </p>   
+        {%endfor%}
+        
+     {%endfor%}
+</div>
+
+
+{%endblock%}

@@ -1,0 +1,16 @@
+{%extends 'base.html'%}
+{%block header%}
+Create Group
+{%endblock%}
+{%block content%}
+<div class='box'>
+<form method='POST'>
+{%csrf_token%}
+
+{{form.as_p}}
+
+<p><button type='submit' class='input'>Create</button></p>
+</form>
+
+</div>
+{%endblock%}

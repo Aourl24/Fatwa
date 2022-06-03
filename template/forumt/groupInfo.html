@@ -1,0 +1,92 @@
+{%extends 'base.html'%}
+{%block header%}
+
+{{group.name}}
+{%endblock%}
+
+{%block content%}
+
+<div class='box' style='backgound-color:#F0FF'>
+{%comment%}    
+    <div class='blck' styl='text-align:center;height:auto;background-color:254117' >
+    
+        <b class='subject'style='font-size:30px;'>
+            {{group.name|upper}}
+        </b>
+            
+        <div class='desize'>
+            Members {{group.member.count}}
+        </div>
+        {%endcomment%}    
+    </div>
+    
+    
+    
+        {%for post in posts%}
+        <div class='box-borde' style='box-shadow:None'>
+    
+    
+            <p class='insize'>
+                {{post.body}}
+            </p>
+            
+            <p class='desize'>
+                Created by 
+                <b>
+                    {{post.name}}
+                </b>
+            </p>
+            
+            <p class='desize'>
+                Started on
+                <b>
+                    {{post.Date}}
+                </b>
+            </p>
+            
+            <a class='menu' href='{%url 'activity' post.id%}' style='font-size:16px'>
+                View
+            </a>
+    
+    {%comment%}
+    <form method='GET' action='{%url 'activity'%}'>
+    <input type='hidden' name='PostId' value={{post.id}}>
+    </form>
+    {%endcomment%}
+    
+    
+    </div>
+    <hr>
+        {%endfor%}
+    
+    
+    
+    
+    <p>
+    <div class='navbar fixed-bottom' style='background-color:254117;display:none;'>
+        <form method='GET' action='{%url 'createPost'%}'>
+            {%csrf_token%}
+            <input name='id' type='hidden' value={{group.id}}>
+            <button class='input' name='groupname' value='{{group.name}}' type='submit' style='background-color:white'>
+                <a href='{%url 'createPost'%}' class='menu'>
+                    <u>
+                        <i class='fas fa-pen'></i>
+                    </u>
+                </a>
+            </button>
+        </form>
+        
+        <form method='GET' class='form-group' action='{%url 'AdminG'%}'>
+            {%csrf_token%}
+            <input name='Groupname' type='hidden' value='{{group.name}}'>
+            <button class='input' name='Groupname' value='{{group.name}}' type='submit' style='background-color:white'>
+                <a class='menu' style='color:black'>
+                   Admin 
+                </a>
+            </button>
+        </form>
+    
+    </p>
+    </div>
+</div>
+{%endblock%}

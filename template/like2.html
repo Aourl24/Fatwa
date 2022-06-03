@@ -1,0 +1,21 @@
+<button hx-get='{%url 'like' question.id%}'
+ hx-swap='outerHTML' 
+ hx-include="input[name='questionId']"
+ class='button' 
+ id='getid'
+ value ={{question.id}}  
+ >
+ <input type='hidden' name='questionId' value='{{question.id}}' >
+ {% if currentUser in question.Support.all %} 
+ <span style='color:347C17' ><i class='fas fa-thumbs-up'></i>
+ Like    {{question.Support.count}}
+</span>                        
+ {%else%}
+ <span style='color:254117' >                 
+ <i class='fas fa-thumbs-up' style='color:254117'></i>
+ Like    {{question.Support.count}}
+ <span>
+ {%endif%}
+ <span class='htmx-indicator' style='font-size:20px'><i class='fas fa-heart'></i></span>
+
+</button>

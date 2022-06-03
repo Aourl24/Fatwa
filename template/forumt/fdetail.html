@@ -1,0 +1,23 @@
+
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+<div class='bx'>
+
+<div class='box' style='border-radius:5px;border:1px solid #f6be00'>
+
+<p><b style='color:f6be00'>{{post.name|title}}</b></p>
+<b class='header' style='color:254117'>
+{{post.head}}
+</b>
+
+{% if post.Image%}
+<p><im src='{{post.Image.url}}' width='320mm'></p>
+{%endif%}
+<p>{{post.body}}</p>
+<i class='desize'>Posted on:{{post.Date}}</i>
+</div>
+</div>
+{%endblock content%}
+<body>
+
