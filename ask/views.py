@@ -12,6 +12,13 @@ from django.db.models import F
 from notifications.signals import notify
 from django.shortcuts import get_object_or_404
 #from django.http import JsonRsponse
+from django.dispatch import receiver
+from django.contrib.auth.models import User
+#from .models import Profile
+from django.db.models.signals import post_save
+
+
+
 
 def fview(request):
 #Home View, it display the question
@@ -23,6 +30,7 @@ def fview(request):
         currentUser=Profile.objects.get(user__username=request.user)
         uquestion=questions.unactive_question(profile=currentUser)
     except ObjectDoesNotExist:
+        currentUser=None
         uquestion=None
 
 # uquestion was used to display pending questions on the html template    
@@ -64,30 +72,24 @@ def fview(request):
     return render(request, 'home.html', {'questions':questions, 'uquestion':uquestion, 'mquestion':mquestion ,'pquestion':pquestion, 'nquestion':nquestion,'currentUser':currentUser})
 
 # the prefix m-most, u-unactive, n-new questions   
+
+
 @login_required(login_url='account_login')
 def like2view(request,id):
+#likeView for hx-requsst
     currentUser=Profile.objects.get(user__username=request.user)
-    #id=request.GET.get('questionId')
     question=Question.objects.get(id=id)
-    #check=Question.objects.filter(id=id, Support=currentUser).exists()
     check=Question.objects.filter(id=id, Support=currentUser).exists()
+# checking if user already like the post, if yes we remove the user if no we add the user
     if check:
         Question.objects.get(id=id).Support.remove(currentUser)
         return render(request, 'like2.html',{'question':question,'currentUser':currentUser})
     else:
         Question.objects.get(id=id).Support.add(currentUser)
         return render(request, 'like2.html',{'question':question, 'currentUser':currentUser})
-        
+                  
     
-        
-        
-       
-           
-    
-
-
 @login_required(login_url='account_login')
-#@decorators
 def Qfview(request):
 # the Ask Question view
     form=QForm(request.POST)
@@ -97,33 +99,45 @@ def Qfview(request):
             formBody=form['body'].value()
             title=form['title'].value()
             if title is None:
-                Question.objects.create(name=currentUser, body=formBody, active=False)
+                Question.objects.create(name=currentUser, body=formBody, active=True)
             else:
-                Question.objects.create(name=currentUser, body=formBody, active=False, title=title)
+                Question.objects.create(name=currentUser, body=formBody, active=True, title=title)
             return redirect('/page/home')
         except ObjectDoesNotExist:
-            #messages.error(request, 'Login to Ask a Question')
             return redirect('/login')
         
     return render(request, 'create.html', {'form':form})
         
-      
+sav=[]
+# this sav save the user session key in sview, this is avoid a user having multiple views count at the same time
+          
 def sview(request, id):
 # show the detail view
-    currentUser=Profile.objects.get(user__username=request.user)
-    question=Question.objects.get(id=id)
-    g=re
-    question.Views=question.Views + 1
-    question.save()
-    #ses=Session.objects.get(session_key=request.session.session_key)
+    
+    try:
+        currentUser=Profile.objects.get(user__username=request.user)
+    except ObjectDoesNotExist:
+        currentUser=None
+    
     ses=request.session.session_key
-    #print( ses)
-    #time.sleep(5)
+    if ses is None:
+#this ses is for Anonymous User and we add the id to recognize the question that have been view
+        sesi='Anonymous' + str(id)
+    else:
+        sesi=ses+str(id)
+    question=Question.objects.get(id=id)
+    
+    if sesi in sav:
+        pass
+    else:
+        question.Views=question.Views + 1
+        sav.append(sesi)
+#append the sesi to the sav we open outside the request
+    print(sav)
+    question.save()
     ans=Answer()
-    #ans.likeCheck(currentUser)
     Ganswer=''
     answers=Answer.objects.filter(question=question, reply=None, active=True).order_by('-date')
-        #question.question.like.add(g)
     form=AForm(use_required_attribute=False)
     Recipient=question.name
     try:
@@ -135,14 +149,18 @@ def sview(request, id):
                 currentUser=Profile.objects.get(user__username=request.user)
                 formBody=form['body'].value()
                 j=request.POST.get('answer_id')
-                #m=Answer.objects.get(id=j)
+                jg=request.POST.get('reply')
+                
                 Nuser= get_object_or_404(User, username=Recipient)
                 print(j)
                 co=None
                 if j:
                     co=Answer.objects.get(id=j)
                     print(co)
-                f=Answer.objects.create(body=formBody, user=currentUser, question=question, reply=co)
+                    f=Answer.objects.create(body=jg, user=currentUser, question=question, reply=co)
+               
+                else:
+                    f=Answer.objects.create(body=formBody, user=currentUser, question=question, reply=co)
                 f.save()
                 notify.send(request.user,recipient=Nuser, verb='Someone Answer Your Question')
                 
@@ -278,20 +296,17 @@ def notificationview(request):
     noti=request.user.notifications.unread()
     noti.mark_all_as_read()
     return render(request, 'notification.html')
-    
+
+@login_required(login_url='account_login')    
 def dark(request):
     if 'dark' in request.GET:
         b=request.GET.get('dark')
         ses=request.session.session_key
         print(ses)
-        try:
-            Mode=Profile.objects.get(user__username=request.user)
-        except ObjectDoesNotExist:
-                h='Unknown'
+        Mode=Profile.objects.get(user__username=request.user)
+        
                 #h=request.session.session_key
-                #if Anon.objects.get(key=h).exists():
-                
-                Mode=Anon.objects.get(Key=h)
+         
                 
           
                 
@@ -313,6 +328,7 @@ def dark(request):
       
     return redirect(b)
             
-        
-    
+
+
+ 
     

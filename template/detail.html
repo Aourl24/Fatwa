@@ -8,10 +8,12 @@
 <div class='bx'>
 
 
-<p>
-<p class='insize'style='font-size:20px' id='que'>{{question.body}}</p>
 
-<div style='color:757575'><span class='desize' style='font-size:14px;color:254117'><b>{{question.name|title}}</b></span> • {{question.date|date:'D M y'}}</div>
+<div class='insize'style='font-size:24px' id='que'>{{question.title}}</div>
+
+<div class='insiz spe' style='font-size:20px;' id='que'>{{question.body}}</div>
+<br>
+<p style='color:757575'><span class='desize' style='font-size:14px;color:254117'><b>{{question.name|title}}</b></span> • {{question.date}}</p>
 
 <hr>
 <p class='highl' style='color:757575; word-spacing:10px'>
@@ -34,6 +36,7 @@
 <span class='passive'>
 <span class='desize'>{{answer.date}}</span></span></span></p>
 <p> </p>
+
 
 <p class='' style='font-size:16px'>
 {{answer.body|title}}</p>
@@ -76,11 +79,11 @@
 
 <div id='{{answer.id}}' class='form'>
 
-<p><form method='POST'>
+<p><form method='POST' class='fom'>
  {%csrf_token%}
 <input type='hidden' name='answer_id' value='{{answer.id}}'>
 
- {{form.as_p}}
+<input name='reply' type='text' class='form-group'>
  
  </form>
  </p>
@@ -105,10 +108,10 @@
 <p><form method='POST'>
 {%csrf_token%}
 {{form}}
-{%comment%}
-<p><button type='submit' class=''>Submit</button></p>
-{%endcomment%}
-</form></p>
+
+<button type='submit' class='btn-success'>Submit</button></p>
+
+</form>
 
 
 </div>

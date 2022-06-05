@@ -11,19 +11,8 @@
         Fatwa
     </title>
     
-    {%if user.is_authenticatd%}
-    {% if user.ProfUser.mode == 'Light' %}
-    <link rel='stylesheet' href='{%static 'css/bootstrap/bootstrap.min.css'%}' >
-    <link rel='stylesheet' href='{%static 'css/awwal.css'%}' >
-    
-    {%else%}
-    <link rel='stylesheet' href='{%static 'css/bootstrap/bootstrap.min.css'%}' >
-    <link rel='stylesheet' href='{%static 'css/awwal.css'%}' >
-    <link rel='stylesheet' href='{%static 'css/dark.css'%}' >
-    
-    {%endif%}
-    {%else%}
-    {% if Anon.mode == 'Dark' and Anon.Key == 'Unknown' %} 
+   
+    {% if user.ProfUser.mode == 'Dark' %}
     <link rel='stylesheet' href='{%static 'css/bootstrap/bootstrap.min.css'%}' >
     <link rel='stylesheet' href='{%static 'css/awwal.css'%}' >
     <link rel='stylesheet' href='{%static 'css/dark.css'%}' >
@@ -33,10 +22,7 @@
     <link rel='stylesheet' href='{%static 'css/awwal.css'%}' >
     
     {%endif%}
-    
-    
-    
-    {%endif%}
+  
     <meta name='viewport' content='width=device-width initial-scale=1'>
     
     
@@ -45,166 +31,164 @@
     </script>
     <script src="{% static 'fontawesome_5/js/all.min.js' %}">
     </script>
+    
 </head>
 
 <body>
-<div id='body'>
-
-
-<p class='icon' id='icon'>
-
-    <button onclick='drop()' class='button' >
-        <span class='header'>
-            &#9776
-            {%block header%}
+    <div id='body'>
+        <p class='icon' id='icon'>
+           <button onclick='drop()' class='button' >
+            <span class='header'>
+                &#9776
+                {%block header%}
                 Fatwa
-            {%endblock%}
-         </span>
-    </button>
-    
-    
-    {%if user.is_authenticated%}
-    
-        <a href='{%url 'notify' %}' class='left'>
-            <i class='fas fa-bell'> </i>
-            {%if user.notifications.unread%}
-                {%notifications_unread%}
-            {%endif%}
-        </a>
-    
-    
-        <b class='left'>
-            <span class='circle'>
-                A
-            </span> 
-            {{request.user|title}}
-        </b>
-
-
-    {%else%}
-
-        <span class='left'>
-            <a class='new' href='{%url 'account_signup' %}'>
-                Sign up
+                {%endblock%}
+            </span>
+           </button>
+           {%if user.is_authenticated%}
+           <a href='{%url 'notify' %}' class='left'>
+                <i class='fas fa-bell'> </i>
+                {%if user.notifications.unread%}
+                    {%notifications_unread%}
+                {%endif%}
             </a>
-            <a  class='new' href='{%url 'account_login' %}'>
-                Log in
-            </a>
-        </span>
-
-    {%endif%}
-
-</p>
-
-<div class='dropdown' id='drop'>
-<p>
-
-    <form method='get' action='{%url 'search'%}'>
-    {%csrf_token%}
-        <p>
-            <input name='searchtext' class='submit-long-curve' type='search' placeholder='Search Questions'>
-            <i class='fas fa-search'></i>
-        </p>
-    </form>
-
+        
+        
+            <b class='left'>
+                <span class='circle'>
+                    A
+                </span> 
+                {{request.user|title}}
+            </b>
     
-    <ul>
-        <li>
-            <p>
-                <a href='{%url 'home'%}' class='menu'>
-                    <i class='fas fa-home'></i>
-                    Home
+    
+        {%else%}
+    
+            <span class='left'>
+                <a class='new' href='{%url 'account_signup' %}'>
+                    Sign up
                 </a>
-            </p>
-        </li>
-
-        <li>
-            <p>
-                <a href='{%url 'create' %}' class='menu'>
-                    <i class='fas fa-question'></i>
-                    Ask a Question
+                <a  class='new' href='{%url 'account_login' %}'>
+                    Log in
                 </a>
-            </p>
-        </li>
-
-        <li>
-            <p>
-                <a href='{%url 'group' %}' class='menu'>
-                    <i class='fas fa-users'></i>
-                    Community
-                </a>
-            </p>
-        </li>
+            </span>
+    
+        {%endif%}
+    
+    </p>
+    
+    <div class='dropdown' id='drop'>
+    <p>
         
-
-        <li>
+        <form method='get' action='{%url 'search'%}'>
+        {%csrf_token%}
             <p>
-                <a href='{%url 'profile' %}' class='menu'>
-                    <i class='fas fa-user'></i>
-                    Profile
-                </a>
+                <input name='searchtext' class='submit-long-curve' type='search' placeholder='Search Questions'>
+                <i class='fas fa-search'></i>
             </p>
-        </li>
-
-        <li>
-            <p>
-                <a href='{%url 'about' %}' class='menu'>
-                    <i class='fas fa-angle-right'></i>
-                    About
-                </a>
-            </p>
-        </li>
+        </form>
+    
         
-        <li>
-            <p>
-            <form method='GET' action='{%url 'darkmode' %}'>
-                <button class='sticker' type='radio' name='dark' value='{{request.path_info}}'>
-                    <i class='fas fa-moon'></i>
-                    {% if user.ProfUser.mode == 'Light'  %}
-                  
-                    Dark-Mode
-                    {%else%}
-                    Light-Mode
-                    {%endif%}
-                    
-                </button>
-             </form>
-             
-            </p>
-        </li>
-
-
-        <li>
-            <p>
-                <a href='{%url 'account_logout' %}' class='menu'>
-                    <i class='fas fa-door-open'></i>
-                    Log-Out
-                </a>
+        <ul>
+            <li>
+                <p>
+                    <a href='{%url 'home'%}' class='menu'>
+                        <i class='fas fa-home'></i>
+                        Home
+                    </a>
+                </p>
+            </li>
+    
+            <li>
+                <p>
+                    <a href='{%url 'create' %}' class='menu'>
+                        <i class='fas fa-question'></i>
+                        Ask a Question
+                    </a>
+                </p>
+            </li>
+    
+            <li>
+                <p>
+                {%comment%}
+                    <a href='{%url 'group' %}' class='menu'>
+                        <i class='fas fa-users'></i>
+                        Community
+                    </a>
+                 {%endcomment%}
+                </p>
+            </li>
             
-            </p>
-        </li>
-    </ul>
-</p>   
-</div>
-
-
-<div class='container' style='position:relative;top:20px'>
-<p>
-    {%block content%}
-
-    {%endblock%}
     
-</p>
-</div>
-</div>
-
-
-<script>
-      document.body.addEventListener('htmx:configRequest', (event) => {
-        event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
-      })
- </script>
-
+            <li>
+                <p>
+                    <a href='{%url 'profile' %}' class='menu'>
+                        <i class='fas fa-user'></i>
+                        Profile
+                    </a>
+                </p>
+            </li>
+    
+            <li>
+                <p>
+                    <a href='{%url 'about' %}' class='menu'>
+                        <i class='fas fa-angle-right'></i>
+                        About
+                    </a>
+                </p>
+            </li>
+            
+            <li>
+                <p>
+                <form method='GET' action='{%url 'darkmode' %}'>
+                    <button class='sticker' type='radio' name='dark' value='{{request.path_info}}'>
+                        <i class='fas fa-moon'></i>
+                        {% if user.ProfUser.mode == 'Light' %}
+                      
+                        Dark-Mode
+                        {%else%}
+                        Light-Mode
+                        {%endif%}
+                        
+                    </button>
+                 </form>
+                 
+                </p>
+            </li>
+    
+            {%if user.is_authenticated%}
+            <li>
+                <p>
+                    <a href='{%url 'account_logout' %}' class='menu'>
+                        <i class='fas fa-door-open'></i>
+                        Log-Out
+                    </a>
+                
+                </p>
+            </li>
+          {%endif%}
+        </ul>
+    </p>   
+    </div>
+    
+    
+    <div class='container' style='position:relative;top:20px'>
+    <p>
+        {%block content%}
+    
+        {%endblock%}
+        
+    </p>
+    </div>
+    </div>
+    
+    
+    <script>
+          document.body.addEventListener('htmx:configRequest', (event) => {
+            event.detail.headers['X-CSRFToken'] = '{{ csrf_token }}';
+          })
+     </script>
+    
 </body>
-
+    
 </html>

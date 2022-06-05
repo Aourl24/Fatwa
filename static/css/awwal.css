@@ -439,6 +439,12 @@ boder:1px solid black;
 boxshadow:0 0px 4px #d8d8d8;
 }
 
+input+fom{
+width:50px;
+height:50px;
+}
+
+
 input.textfieldR{
 width:100%;
 hight:1cm;
@@ -526,7 +532,7 @@ padding:0;
 a.menu{
 font-size:18px;
 background-color:white;
-color:254117;
+color:347C17;
 font-weight:bold;
 }
 
@@ -601,6 +607,12 @@ color:None;
 
 
 
+
+
+
+
+
+
 @media(min-width:600px){
 body{
 
@@ -616,7 +628,7 @@ margin:10px auto 10px auto;
  
 .dropdown{
 position:fixed;
-display:block;
+dislay:block;
 background-color:white;
 top:45px;
 float:left;

@@ -2,16 +2,24 @@
 {%load static%}
 
 {%block content%}
-<div class='box' style='text-align:center'>
+<div class='bo' style='text-align:center'>
 <br>
 <br>
-<h1 style='font-size:30px;'>Fatwa</h1>
+
+<marquee behavior='slide'><img src='{%static 'images/fatwa.png'%}' width=180cm, height=auto ></marquee>
+    
+
 <br>
-<input class='submit-long-curve' type='search' placeholder='Search Questions'>
+
+<form method='get' action='{%url 'search'%}'>
+{%csrf_token%}
+<input class='submit-long-curve' name='searchtext' type='search' placeholder='Search Questions'>
+</form>
+
 <br>
 <br>
 <br>
-<div class='flex-wrap' style='text-align:center'>
+<div class='flex-wrp' style='text-align:center'>
 <div class='header' style='font-size:25px;color:347C17'>
 Learning more 
 <br>about Islam
@@ -32,33 +40,33 @@ Grade: Hasan (fair) according to Al-Arna’ut
 
 <br>
 <br>
-<div class='box-border' style='text-align:center'>
+<div class='box-border' styl='text-align:center'>
 
 
 
-<img src='{%static 'images/Picture.jpg'%}' width=95%, height=auto>
-
-</div>
-
-<br>
-<br>
-<div class='box-border' style='text-align:center'>
-
-
-
-<img src='{%static 'images/QandA.jpg'%}' width=95%, height=auto>
+<img src='{%static 'images/Picture.jpg'%}' width=100%, height=auto>
 
 </div>
 
-<a href='{%url 'home'%}' class='menu'>Home</a>
-
 <br>
 <br>
 <div class='box-border' style='text-align:center'>
 
 
 
-<img src='{%static 'images/Ask.jpg'%}' width=95%, height=auto>
+<img src='{%static 'images/QandA.jpg'%}' width=100%, height=auto>
+
+</div>
+
+<p><a href='{%url 'home'%}' class='menu'>Home</a></p>
+
+<br>
+<br>
+<div class='box-border' stye='text-align:center'>
+
+
+
+<img src='{%static 'images/Ask.jpg'%}' width=100%, height=auto>
 
 </div>
 

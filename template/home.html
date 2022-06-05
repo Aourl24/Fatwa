@@ -80,23 +80,22 @@ Home
             <a class='normal' href='{%url 'detail' question.id%}'>
 
                 {%if question.title != None %}
-                    <p class='insize'>
+                    <div class='insize' style='font-size:20px'>
                         {{question.title}}
-                    </p>
-
-                    <p class='mesize' style='font-size:15px'>
+                    </div>
+                
+                    <div class='mesize' style='font-size:18px'>
                         {{question.body}}
-                    </p>
+                    </div>
 
                 {%else%}
-                    <p class='insize'>
+                    <div class='insize'>
                         {{question.body}}
-                    </p>
+                    </div>
                     
                 {%endif%}
 
             </a>
-            
             <p>
                 <div class='desize' style='font-size:12px'>
                     <b class='passive'>
@@ -106,13 +105,13 @@ Home
                         Asked on {{question.date|date:'D j/m/y'}} {{question.date|time}}
                     </span>
                 </div>
-            </p>
             
             
-            <p>
+            
+            <div>
                 <span class='cag' style='font-size:14px;'>
                     
-                    <button type='button' class='button' stye='color:254117'>
+                    <button type='button' class='button other' stye='color:254117'>
                          <i class='fas fa-comment'></i>
                          Answer {{question.question.count}}
                      </button>
@@ -122,15 +121,15 @@ Home
                          
                     
 
-                     <button type='button' class='button' stye='color:254117;'> 
+                     <button type='button' class='button other' stye='color:254117;'> 
                          <i class='fas fa-eye'></i>
                          Views {{question.Views}}
                      </button>
                      
                 </span>
-              </p>  
+            </div>  
             
-
+            
             
             <br>
             

@@ -18,10 +18,11 @@
     </head>
     
     <div class='box' style='text-align:center'>
-        <h1>
+    
+        <h2>
             Welcome Back
             <i class='fas fa-grin'></i>
-         </h1>
+         </h2>
          
         <div class='box'>
             <h2 style='color:347C17'>
@@ -37,7 +38,9 @@
                 <form method='post'>
                 {%csrf_token%}
                         
-                            {{ form.errors}}
+                            {%if form.errors %}
+                            <p>Invalid Username or Password</p>
+                            {%endif%}
                         
     
                     {% for field in form %}
@@ -57,9 +60,15 @@
                     </p>
                     
                     <p>
+                        <a href='{% url 'account_reset_password'%}' style='font-size:18px;background-color:white;color:blue'>
+                        Forget Password
+                        </a>
+                    </p>
+                     <br> 
+                    <p>
                         If You Don't have an account 
                         <p>
-                            <a href='{% url 'account_signup'%}' style='font:24px;background-color:357417'>
+                            <a href='{% url 'account_signup'%}' style='font-size:20px;background-color:357417'>
                                 Signup
                             </a>
                         </p>
@@ -68,5 +77,7 @@
             </p>    
     
         </div>
+        <img src='{%static 'images/fatwa.png'%}' width=180cm, height=auto >
+ 
     </div>
 </html>

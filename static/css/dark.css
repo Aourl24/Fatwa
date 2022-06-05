@@ -30,6 +30,12 @@ background-color:34282C;
 border:1px solid black;
 }
 
+button.button:active{
+color:white;
+background-color:34282C;
+border:1px solid black;
+}
+
 button{
 background-color:34282C;
 border:None;
@@ -48,7 +54,7 @@ background-color:34282C}
 
 a.new{
 background-color:34282C;
-color:254117;
+color:347C17;
 }
 
 button.sticker{
@@ -59,7 +65,7 @@ color:757575;
 
 a.menu{
 background-color:34282C;
-color:254117;
+color:347C17;
 }
 
 .bold-black{
@@ -93,4 +99,14 @@ background-color:white;}
 
 a.popovers{
 b
+}
+
+.other{
+color:617C58}
+
+button#getid{
+color:617C58}
+
+.spe{
+color:white;
 }

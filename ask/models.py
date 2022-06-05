@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 # Create your models here.
-from datetime import datetime, timedelta
+from datetime import datetime,date, timedelta
 from django.db.models import Count   
 from django.db import models
 from hitcount.models import HitCountMixin, HitCount
@@ -11,16 +11,28 @@ from django.contrib.contenttypes.fields import GenericRelation
 
 
 check=(('A',  'Islam By Birth'),
-        ('B', 'Convert'), )
+        ('B', 'Convert'),
+        ('C','Other') )
+
+basic=(('A',  'Basic'),
+        ('B', 'Intermediary'),
+        ('C','Advanced') )
         
+last=(('A',  'Prophet Isa'),
+        ('B', 'Prophet Musa'),
+        ('C','Prophet Muhammed'),
+        ('D','Prophet Ibrahim') )
+                               
 color=(('Light',  'Light'),
         ('Dark', 'Dark'), )
 
 class Profile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE,related_name='ProfUser')
     follow=models.ManyToManyField('self', related_name='follows', symmetrical=False)
-    age=models.IntegerField(null=True, default=15)
+    age=models.DateField(null=True,blank=True)
     islam=models.CharField(max_length=100, choices=check, null=True)
+    Basic_Knowledge=models.CharField(max_length=50, choices=basic, null=True, blank=True)
+    NameofLastProphet=models.CharField(max_length=50,choices=last,null=True, blank=True)
     mode=models.CharField(max_length=10,choices=color, default='Light')
     
     
@@ -31,7 +43,7 @@ class Profile(models.Model):
     
 class Question(models.Model):
     name=models.ForeignKey(Profile, on_delete=models.CASCADE,null=True,  related_name='User')
-    date=models.DateField(auto_now_add=True)
+    date=models.DateTimeField(auto_now_add=True)
     title=models.CharField(max_length=200, blank=True,null=True)
     body=models.CharField(max_length=1000)
     active=models.BooleanField(default=True)
@@ -75,7 +87,7 @@ class Question(models.Model):
 class Answer(models.Model):
     question=models.ForeignKey(Question, related_name='question', null=True, on_delete=models.CASCADE)
     user=models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='userName', null=True)
-    date=models.DateField(auto_now_add=True)
+    date=models.DateTimeField(auto_now_add=True)
     body=models.CharField(max_length=1000)
     like=models.ManyToManyField(Profile, symmetrical=False, related_name='like', blank=True)
     dislike=models.ManyToManyField(Profile, symmetrical=False, related_name='dislike', blank=True)
@@ -128,15 +140,11 @@ class Anon(models.Model):
     def __str__(self):
         return self.Key
             
-#@receiver(post_save, Sender=User)        
-def Creation(sender,instance,created, **kwargs):
-    if created:
-        newprofile=Profile(user=instance)
-        newprofile.save()
-        newprofile.follow.set([instance.Profile.id])
-        newprofile.save()
-        
-post_save.connect(Creation, User)
+
+#        newprofile.follow.set([instance.Profile.id])
+#        newprofile.save()
+#        
+#post_save.connect(Creation, User)
 
     
     

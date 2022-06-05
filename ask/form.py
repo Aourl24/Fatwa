@@ -10,7 +10,7 @@ class QForm (forms.ModelForm):
         require=None
         
 class AForm(forms.ModelForm):
-    body=forms.CharField(label='', required=False, widget=forms.TextInput(attrs={'placeholder':'Input Text', 'class':'forminput'}))
+    body=forms.CharField(label='', required=False, widget=forms.Textarea(attrs={'placeholder':'Input Text', 'class':'forminput'}))
     
     class Meta:
         model=Answer
